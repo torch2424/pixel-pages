@@ -4,7 +4,7 @@
   "description": "Simple landing pages meant to send page view and conversion events to tracking pixels",
   "scripts": {
     "start": "npm run dev",
-    "dev": "echo \"Visit: http://localhost:1234/?app-config=/json/examples/example-app-config.json&page-config=/json/examples/example-page-config.json\" && parcel index.html",
+    "dev": "echo \"Visit: http://localhost:1234/?app-config=/examples/example-app.json&page-config=/examples/example-page-custom.json\" && parcel index.html",
     "build": "parcel build index.html"
   },
   "alias": {

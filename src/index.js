@@ -46,10 +46,13 @@ class App extends Component {
         const configUrl = searchParams.get(configKey);
         
         // Try to get the config
-        console.log('grabbing config', configUrl)
-        const configJson = await (await fetch(configUrl)).json();
-        console.log(configJson);
-        config[configKey] = configJson;
+        try {
+          const configJson = await (await fetch(configUrl)).json();
+          config[configKey] = configJson;
+        } catch (error) {
+          console.error(`Failure to load the ${configKey} error:`);
+          throw error;
+        }
       }
       
       this.setState({
@@ -59,6 +62,7 @@ class App extends Component {
       })
     };
     asyncMount().catch(error => {
+      console.error(error);
       this.setState({
         ...this.state,
         isLoading: false,
@@ -84,9 +88,9 @@ class App extends Component {
             </svg>
           ) : ''}
           { this.state.config ? (
-            <div>
-              Loaded!
-            </div>
+            <h1 class="text-white">
+              {JSON.stringify(this.state, null, 2)}
+            </h1>
           ) : '' }
         </div>
       </main>
