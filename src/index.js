@@ -4,6 +4,10 @@ class App extends Component {
   state = { isLoading: true }
 
   componentDidMount() {
+
+    // TODO torch2424: Get an app config and page config JSON from the query params
+    // App config should have the various settings associated with pixel pages (Analytics, Facebook Pixels, etc...)
+    // Page config should have the actual information needed to display the page (E.g Spotify album id and stuff)
     
   }
 
