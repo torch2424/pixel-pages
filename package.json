@@ -2,19 +2,10 @@
   "name": "pixel-pages",
   "version": "1.0.0",
   "description": "Simple landing pages meant to send page view and conversion events to tracking pixels",
-  "main": "src/index.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "parcel src/index.html",
+    "dev": "parcel src/index.html && echo \"Visit: http://localhost:1234/?app-config=/json/examples/example-app-config.json&page-config=/json/examples/example-page-config.json\"",
     "build": "parcel build src/index.html"
-  },
-  "staticFiles": {
-    "staticPath": [
-      {
-        "staticPath": "json",
-        "staticOutDir": "json"
-      }
-    ]
   },
   "alias": {
     "preact/jsx-dev-runtime": "preact/jsx-runtime"
@@ -32,6 +23,7 @@
   "homepage": "https://github.com/torch2424/pixel-pages#readme",
   "devDependencies": {
     "parcel": "^2.10.3",
+    "parcel-reporter-static-files-copy": "^1.5.3",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5"
   },

@@ -1,0 +1,17 @@
+{
+  "extends": "@parcel/config-default",
+  "reporters": ["parcel-reporter-static-files-copy"],
+  "reporter": {
+      "parcel-reporter-static-files-copy": {
+      "staticFiles": {
+      "staticPaths": [
+      {
+        "staticPath": "json",
+        "staticOutDir": "json"
+      }
+      ]
+    }
+
+    }
+  }
+}

@@ -3,7 +3,8 @@ import { h, render, Component } from 'preact';
 class App extends Component {
   state = { 
     isLoading: true,
-    errorMessage: null
+    errorMessage: null,
+    config: null
   }
 
   componentDidMount() {
@@ -12,18 +13,58 @@ class App extends Component {
     // App config should have the various settings associated with pixel pages (Analytics, Facebook Pixels, etc...)
     // Page config should have the actual information needed to display the page (E.g Spotify album id and stuff)
     
-    // Grab our searchParams
-    const searchParams = new URLSearchParams(window.location.search);
+    const asyncMount = async () => {
+      // Grab our searchParams
+      const searchParams = new URLSearchParams(window.location.search);
 
-    // Verify that we have a the appropriate params
-    if (!searchParams.has('app-config') || !searchParams.has('page-config')) {
+      const configKeys = [
+        'app-config',
+        'page-config'
+      ];
+
+      const hasMissingConfig = configKeys.some(configKey => {
+        if (searchParams.has(configKey)) {
+          return false;
+        }
+        return true;
+      });
+
+      // Verify that we have a the appropriate params
+      if (hasMissingConfig) {
+        this.setState({
+          ...this.state,
+          isLoading: false,
+          errorMessage: 'This page has an incomplete URL. Make sure you copied the URL exactly as it was sent to you.'
+        });
+        return;
+      }
+
+      // Fetch our JSON configs
+      const config = {};
+      for (let i = 0; i < configKeys.length; i++) {
+        const configKey = configKeys[i];
+        const configUrl = searchParams.get(configKey);
+        
+        // Try to get the config
+        console.log('grabbing config', configUrl)
+        const configJson = await (await fetch(configUrl)).json();
+        console.log(configJson);
+        config[configKey] = configJson;
+      }
+      
       this.setState({
         ...this.state,
         isLoading: false,
-        errorMessage: 'This page has an incomplete URL. Make sure you copied the URL exactly as it was sent to you.'
+        config
+      })
+    };
+    asyncMount().catch(error => {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        errorMessage: 'Unable to load the page. Please let the person who sent you this know that their page is broken!'
       });
-      return;
-    }
+    });
   }
 
   render() {
