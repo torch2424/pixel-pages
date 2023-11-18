@@ -16,6 +16,9 @@
       }
     ]
   },
+  "alias": {
+    "preact/jsx-dev-runtime": "preact/jsx-runtime"
+  },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "repository": {
     "type": "git",
